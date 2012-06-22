@@ -6,6 +6,9 @@
     should expands to a unique number per translation unit. Default
     to __LINE__ if not defined. Use __COUNTER__ on MSVS 7.0+.
     (Bug #2031696)
+	
+  - Fixed 'configure' script for Solaris / Sun Studio plateform.
+    (Bug #3483400 & #3483396, patches contributed by Tim Mooney). 
 
 * Compilation:
 

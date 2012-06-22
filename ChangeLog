@@ -1,3 +1,11 @@
+2012-06-22 Baptiste Lepilleur <blep@users.sourceforge.net>
+	* include/cppunit/portability/FloatingPoint.h:
+	* configure.in:
+	* INSTALL-unix: Fixed build on Solaris/Sun Studio (configure issues). 
+	  Applied patch from bug #3483400 & #3483396. Updated build instructions.
+	  Added missing include <ieeefp.h> required to use finite() on 
+	  Solaris/Sun Studio. Added -lm to link for fabs().
+
 2009-11-24 Baptiste Lepilleur <blep@users.sourceforge.net>
 	* src/cppunit/TestResult.cpp: flush stdout & stderr in destructor
 	  to avoid message loss in case of crash (bug #2832029).
