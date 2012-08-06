@@ -50,7 +50,7 @@ struct CPPUNIT_API CppUnitTestPlugIn
    * you can use this to configure the listener using the \a parameters.
    *
    * You could also use the parameters to specify some global parameter, such
-   * as test datas location, database name...
+   * as test data location, database name...
    *
    * N.B.: Parameters interface is not define yet, and the plug-in runner does
    * not yet support plug-in parameter.
@@ -150,13 +150,13 @@ typedef CppUnitTestPlugIn *(*TestPlugInSignature)();
 #define BLENDFUNCTION void    // for mingw & gcc
 #include <windows.h>
 #endif
-#define CPPUNIT_PLUGIN_IMPLEMENT_MAIN()               \
-  BOOL APIENTRY DllMain( HANDLE hModule,              \
-                         DWORD  ul_reason_for_call,   \
-                         LPVOID lpReserved )          \
-  {                                                   \
-      return TRUE;                                    \
-  }                                                   \
+#define CPPUNIT_PLUGIN_IMPLEMENT_MAIN()                   \
+  BOOL APIENTRY DllMain( HANDLE /* hModule, */            \
+                         DWORD  /* ul_reason_for_call, */ \
+                         LPVOID /* lpReserved */ )        \
+  {                                                       \
+      return TRUE;                                        \
+  }                                                       \
   typedef char __CppUnitPlugInImplementMainDummyTypeDef
 
 // Unix
