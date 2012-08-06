@@ -151,8 +151,8 @@ typedef CppUnitTestPlugIn *(*TestPlugInSignature)();
 #include <windows.h>
 #endif
 #define CPPUNIT_PLUGIN_IMPLEMENT_MAIN()                   \
-  BOOL APIENTRY DllMain( HANDLE /* hModule, */            \
-                         DWORD  /* ul_reason_for_call, */ \
+  BOOL APIENTRY DllMain( HANDLE /* hModule */,            \
+                         DWORD  /* ul_reason_for_call */, \
                          LPVOID /* lpReserved */ )        \
   {                                                       \
       return TRUE;                                        \
