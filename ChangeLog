@@ -4,6 +4,7 @@
     * Fix W4 C4100 warnings in TestPlugIn.h
     * Add VS2010 project and build files (bug #3554670) - largely based on the
       VS2008 effort from A.Dent
+    * Update version string (bug #2983798)
 
 2012-06-22 Baptiste Lepilleur <blep@users.sourceforge.net>
     * include/cppunit/portability/FloatingPoint.h:

@@ -14,6 +14,10 @@
 
   - Fixed compilation issue with Microsoft Visual Studio.Net 2008 and
     added Visual Studio  projects (.vcproj).
+
+  - Added support for Microsoft Visual Studio 2010: added Visual Studio
+    project files (.vcxproj), solution file to manage these (VS2010.sln)
+    and a batch file to clean or build all VS2010 targets (BuildVS2010.bat).
      
   - Changes to build without warnings using gcc -Wall -W -ansi 
     (patch #1898225 contributed by dpkatz)
@@ -22,6 +26,9 @@
     ( patch #2807259 contributed by Jan Echternach).
 
   - Fixed detection of cxxabi.h with gcc 4.3 in configure (bug #2796543).
+
+  - Fixed numerous VS2010 C4100, C4251 and "_WIN32_WINNT not defined..."
+    warnings (bug #3554666, #3554667).
       
 * Test Plug-in Runner: 
   - fixed memory leak in TestPlugInRunnerDlg (#1721408)
