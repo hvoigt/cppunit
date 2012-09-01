@@ -11,13 +11,15 @@
 @rem    headed by a top level directory with no spaces in any level.  [Don't put it
 @rem    under "x:\Program Files" for example.]
 
-
 if not "%1" == "" goto %1%
 
-call BuildVS2010.bat Clean
-call BuildVS2010.bat Build
+if "%VS100COMNTOOLS%" == "" goto :noVS2010
+if not exist "%devenvdir%devenv.exe" goto :explain
 
-goto :exit
+call %0 Clean
+call %0 Build
+
+goto :eof
 
 
 :Clean
@@ -31,7 +33,8 @@ devenv  Build2010.sln /clean "Release|Win32"
 devenv  Build2010.sln /clean "Release Unicode|Win32"
 devenv  Build2010.sln /clean "Release DLL|Win32"
 devenv  Build2010.sln /clean "Release Static|Win32"
-goto :exit
+devenv  Build2010.sln /clean "Installer|Win32"
+goto :eof
 
 :Build
 @rem Note that reported MSB3073 "build errors" for 'simple_plugin' and 'hierarchy'
@@ -48,8 +51,30 @@ devenv  Build2010.sln /build "Release|Win32"
 devenv  Build2010.sln /build "Release Unicode|Win32"
 devenv  Build2010.sln /build "Release DLL|Win32"
 devenv  Build2010.sln /build "Release Static|Win32"
+goto :eof
 
-goto :exit
+:BuildMSI
+call %0 Clean
+call %0 Build
+devenv  Build2010.sln /build "Installer|Win32"
+del setup.exe > NUL 2>&1
+goto :eof
 
+:noVS2010
+@echo.
+@echo This batch file is expected to run only on a machine with VS2010 installed.
+@echo You need to install VS2010 on this computer or select a different installation option.
+@echo.
+pause
+goto :eof
 
-:exit
+:explain
+@echo.
+@echo This command prompt environment is not initialized correctly to include awareness
+@echo of the VS2010 installation.  To run this file in the correct environment, click
+@echo "Microsoft Visual Studio 2010" then "Visual Studio Tools" then "Visual Studio Command
+@echo Prompt (2010)" and run this .bat file from the resulting command window.
+@echo.
+pause
+goto :eof
+

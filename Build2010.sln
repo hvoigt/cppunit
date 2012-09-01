@@ -45,6 +45,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple", "examples\simple\s
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple_plugin", "examples\simple\simple_plugin.vcxproj", "{71F48C20-FDD7-437F-983C-8C4606D14D59}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BuildCppunitMSI", "src\BuildMSI.vdproj", "{B032B761-88DF-4170-A1D0-F89E806FFCAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug DLL|Win32 = Debug DLL|Win32
@@ -280,6 +282,18 @@ Global
 		{71F48C20-FDD7-437F-983C-8C4606D14D59}.Release Unicode|Win32.ActiveCfg = Release|Win32
 		{71F48C20-FDD7-437F-983C-8C4606D14D59}.Release|Win32.ActiveCfg = Release|Win32
 		{71F48C20-FDD7-437F-983C-8C4606D14D59}.Release|Win32.Build.0 = Release|Win32
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Debug DLL|Win32.ActiveCfg = Debug
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Debug No Type Info Name|Win32.ActiveCfg = Installer
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Debug NtTimer|Win32.ActiveCfg = Installer
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Debug Static|Win32.ActiveCfg = Installer
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Debug Unicode|Win32.ActiveCfg = Debug
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Debug|Win32.ActiveCfg = Debug
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Installer|Win32.ActiveCfg = Installer
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Installer|Win32.Build.0 = Installer
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Release DLL|Win32.ActiveCfg = Release
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Release Static|Win32.ActiveCfg = Release
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Release Unicode|Win32.ActiveCfg = Release
+		{B032B761-88DF-4170-A1D0-F89E806FFCAA}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -32,6 +32,12 @@
       
 * Test Plug-in Runner: 
   - fixed memory leak in TestPlugInRunnerDlg (#1721408)
+
+* Installer
+  - Added deployment project and support files to build cppunit_1_12_2.msi
+    installer file for project installation from compiled binaries (based
+    on VS2010 compilation).
+
       
       
   New in CppUnit 1.12.1:
