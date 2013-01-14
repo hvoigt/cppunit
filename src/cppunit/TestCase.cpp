@@ -53,37 +53,7 @@ void
 TestCase::run( TestResult *result )
 {
   result->startTest(this);
-/*
-  try {
-    setUp();
 
-    try {
-      runTest();
-    }
-    catch ( Exception &e ) {
-      Exception *copy = e.clone();
-      result->addFailure( this, copy );
-    }
-    catch ( std::exception &e ) {
-      result->addError( this, new Exception( Message( "uncaught std::exception", 
-                                                      e.what() ) ) );
-    }
-    catch (...) {
-      Exception *e = new Exception( Message( "uncaught unknown exception" ) );
-      result->addError( this, e );
-    }
-
-    try {
-      tearDown();
-    }
-    catch (...) {
-      result->addError( this, new Exception( Message( "tearDown() failed" ) ) );
-    }
-  }
-  catch (...) {
-    result->addError( this, new Exception( Message( "setUp() failed" ) ) );
-  }
-*/
   if ( result->protect( TestCaseMethodFunctor( this, &TestCase::setUp ),
                         this,
                        "setUp() failed" ) )
