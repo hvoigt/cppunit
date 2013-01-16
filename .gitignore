@@ -1,0 +1,35 @@
+# Compiler output (OS_WIN32)
+*.aps
+*.bsc
+*.dep
+*.dll
+*.dll.embed.manifest
+*.exe
+*.exp
+*.idb
+*.ilk
+*.intermediate.manifest
+*.lib
+*.ncb
+*.obj
+*.opt
+*.pch
+*.pdb
+*.plg
+*.res
+*.sbr
+*.suo
+*.use
+*.vcproj.*.user
+BuildLog.htm
+Debug
+Release
+
+# backup files
+*.bak
+*.orig
+*~
+*.swp
+
+# Local files
+/examples/simple/tests.xml
