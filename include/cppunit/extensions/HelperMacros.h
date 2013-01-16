@@ -300,6 +300,19 @@
                   &TestFixtureType::testMethod,           \
                   context.makeFixture() ) ) )
 
+/*! \brief Add a method to the suite.
+ * \param testMethod Name of the method of the test case to add to the
+ *                   suite. The signature of the method must be of
+ *                   type: void testMethod();
+ * \see  CPPUNIT_TEST_SUITE.
+ */
+#define CPPUNIT_TEST_KNOWN_FAILURE( testMethod )          \
+    CPPUNIT_TEST_SUITE_ADD_TEST(                          \
+        ( new CPPUNIT_NS::TestCaller<TestFixtureType>(    \
+                  context.getTestNameFor( #testMethod),   \
+                  &TestFixtureType::testMethod,           \
+                  context.makeFixture(), true ) ) )
+
 /*! \brief Add a test which fail if the specified exception is not caught.
  *
  * Example:

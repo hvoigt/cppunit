@@ -31,6 +31,12 @@ public:
    */
   virtual void run( TestResult *result ) =0;
 
+  /*! \brief Is this test marked as known to fail
+   */
+  virtual bool isKnownToFail() {
+    return false;
+  }
+
   /*! \brief Return the number of test cases invoked by run().
    *
    * The base unit of testing is the class TestCase.  This

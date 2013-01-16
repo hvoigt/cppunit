@@ -55,6 +55,8 @@ CompilerOutputter::write()
 void 
 CompilerOutputter::printSuccess()
 {
+  if ( m_result->testKnownFailures() )
+    m_stream  << "Known Failures (" << m_result->testKnownFailures() << ")\n";
   m_stream  << "OK (" << m_result->runTests()  << ")\n";
 }
 
@@ -73,6 +75,11 @@ CompilerOutputter::printFailuresList()
   for ( int index =0; index < m_result->testFailuresTotal(); ++index)
   {
     printFailureDetail( m_result->failures()[ index ] );
+  }
+
+  for ( int index =0; index < m_result->testKnownFailures(); ++index)
+  {
+    printFailureDetail( m_result->knownFailures()[ index ] );
   }
 }
 
@@ -187,6 +194,7 @@ CompilerOutputter::printStatistics()
   m_stream  <<  "Run: "  <<  m_result->runTests()  << "   "
             <<  "Failure total: "  <<  m_result->testFailuresTotal()  << "   "
             <<  "Failures: "  <<  m_result->testFailures()  << "   "
+            <<  "Known Failures: "  <<  m_result->testKnownFailures()  << "   "
             <<  "Errors: "  <<  m_result->testErrors()
             <<  "\n";
 }

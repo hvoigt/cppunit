@@ -53,6 +53,13 @@ TestFailure::isError() const
 }
 
 
+bool
+TestFailure::isKnownFailure() const
+{
+    return m_failedTest->isKnownToFail();
+}
+
+
 /// Gets the name of the failed test.
 std::string 
 TestFailure::failedTestName() const

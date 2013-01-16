@@ -258,6 +258,13 @@ TestAssertTest::testFail()
 
 
 void 
+TestAssertTest::testKnownFailure()
+{
+    CPPUNIT_FAIL("Test known failure");
+}
+
+
+void 
 TestAssertTest::checkMessageContains( CPPUNIT_NS::Exception *e,
                                       std::string expected )
 {

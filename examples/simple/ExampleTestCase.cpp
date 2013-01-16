@@ -45,3 +45,9 @@ void ExampleTestCase::testEquals()
   CPPUNIT_ASSERT_EQUAL( 12, 13 );
   CPPUNIT_ASSERT_DOUBLES_EQUAL( 12.0, 11.99, 0.5 );
 }
+
+
+void ExampleTestCase::testKnown()
+{
+    CPPUNIT_ASSERT(false);
+}

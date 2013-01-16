@@ -56,8 +56,10 @@ public:
   virtual int testErrors() const;
   virtual int testFailures() const;
   virtual int testFailuresTotal() const;
+  virtual int testKnownFailures() const;
 
   virtual const TestFailures& failures() const;
+  virtual const TestFailures& knownFailures() const;
   virtual const Tests &tests() const;
 
 protected:
@@ -65,6 +67,7 @@ protected:
 
   Tests m_tests;
   TestFailures m_failures;
+  TestFailures m_knownFailures;
   int m_testErrors;
 
 private:

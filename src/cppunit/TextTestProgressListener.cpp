@@ -27,7 +27,11 @@ TextTestProgressListener::startTest( Test * )
 void 
 TextTestProgressListener::addFailure( const TestFailure &failure )
 {
-  stdCOut() << ( failure.isError() ? "E" : "F" );
+  if (failure.isKnownFailure())
+    stdCOut() << "K";
+  else
+    stdCOut() << ( failure.isError() ? "E" : "F" );
+
   stdCOut().flush();
 }
 

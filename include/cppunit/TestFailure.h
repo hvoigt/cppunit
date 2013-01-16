@@ -37,6 +37,7 @@ public:
   virtual SourceLine sourceLine() const;
 
   virtual bool isError() const;
+  virtual bool isKnownFailure() const;
 
   virtual std::string failedTestName() const;
 

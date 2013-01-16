@@ -19,6 +19,7 @@ class TestAssertTest : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST( testAssertDoubleEqualsPrecision );
   CPPUNIT_TEST( testAssertDoubleNonFinite );
   CPPUNIT_TEST( testFail );
+  CPPUNIT_TEST_KNOWN_FAILURE( testKnownFailure );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -51,6 +52,7 @@ public:
   void testAssertLongNotEquals();
 
   void testFail();
+  void testKnownFailure();
 
 private:
   TestAssertTest( const TestAssertTest &copy );

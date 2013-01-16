@@ -112,11 +112,12 @@ public:
    * \param name name of this TestCaller
    * \param test the method this TestCaller calls in runTest()
    */
-  TestCaller( std::string name, TestMethod test ) :
+  TestCaller( std::string name, TestMethod test, bool knownToFail = false ) :
 	    TestCase( name ), 
 	    m_ownFixture( true ),
 	    m_fixture( new Fixture() ),
-	    m_test( test )
+	    m_test( test ),
+	    m_knownToFail( knownToFail )
   {
   }
 
@@ -129,11 +130,13 @@ public:
    * \param test the method this TestCaller calls in runTest()
    * \param fixture the Fixture to invoke the test method on.
    */
-  TestCaller(std::string name, TestMethod test, Fixture& fixture) :
+  TestCaller(std::string name, TestMethod test, Fixture& fixture,
+             bool knownToFail = false ) :
 	    TestCase( name ), 
 	    m_ownFixture( false ),
 	    m_fixture( &fixture ),
-	    m_test( test )
+	    m_test( test ),
+	    m_knownToFail( knownToFail )
   {
   }
     
@@ -146,11 +149,13 @@ public:
    * \param test the method this TestCaller calls in runTest()
    * \param fixture the Fixture to invoke the test method on.
    */
-  TestCaller(std::string name, TestMethod test, Fixture* fixture) :
+  TestCaller(std::string name, TestMethod test, Fixture* fixture,
+             bool knownToFail = false ) :
 	    TestCase( name ), 
 	    m_ownFixture( true ),
 	    m_fixture( fixture ),
-	    m_test( test )
+	    m_test( test ),
+	    m_knownToFail( knownToFail )
   {
   }
     
@@ -187,11 +192,17 @@ public:
   	return "TestCaller " + getName(); 
   }
 
+  virtual bool isKnownToFail()
+  {
+      return m_knownToFail;
+  }
+
 private: 
   TestCaller( const TestCaller &other ); 
   TestCaller &operator =( const TestCaller &other );
 
 private:
+  bool m_knownToFail;
   bool m_ownFixture;
   Fixture *m_fixture;
   TestMethod m_test;

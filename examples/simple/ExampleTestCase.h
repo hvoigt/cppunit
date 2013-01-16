@@ -17,6 +17,7 @@ class ExampleTestCase : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST( anotherExample );
   CPPUNIT_TEST( testAdd );
   CPPUNIT_TEST( testEquals );
+  CPPUNIT_TEST_KNOWN_FAILURE( testKnown );
   CPPUNIT_TEST_SUITE_END();
 
 protected:
@@ -31,6 +32,7 @@ protected:
   void anotherExample();
   void testAdd();
   void testEquals();
+  void testKnown();
 };
 
 

@@ -19,7 +19,10 @@ void
 TextTestResult::addFailure( const TestFailure &failure )
 {
   TestResultCollector::addFailure( failure );
-  stdCOut() << ( failure.isError() ? "E" : "F" );
+  if (failure.isKnownFailure())
+    stdCOut() << "K";
+  else
+    stdCOut() << ( failure.isError() ? "E" : "F" );
 }
 
 

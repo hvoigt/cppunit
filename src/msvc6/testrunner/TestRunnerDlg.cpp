@@ -221,7 +221,8 @@ TestRunnerDlg::addListEntry( const CPPUNIT_NS::TestFailure &failure )
 {
   CListCtrl *listCtrl = (CListCtrl *)GetDlgItem (IDC_LIST);
   int currentEntry = m_result->testErrors() + 
-                     m_result->testFailures() -1;
+                     m_result->testFailures() +
+                     m_result->testKnownFailures() - 1;
 
   ErrorTypeBitmaps errorType;
   if ( failure.isError() )
@@ -231,7 +232,10 @@ TestRunnerDlg::addListEntry( const CPPUNIT_NS::TestFailure &failure )
 
   ListCtrlSetter setter( *listCtrl );
   setter.insertLine( currentEntry );
-  setter.addSubItem( failure.isError() ? _T("Error") : _T("Failure"), errorType );
+  CString typeString = failure.isError() ? _T("Error") : _T("Failure");
+  if (failure.isKnownFailure())
+      typeString = _T("Known ") + typeString;
+  setter.addSubItem(typeString, errorType );
 
   // Set test name
   setter.addSubItem( failure.failedTestName().c_str(), errorType );
@@ -279,10 +283,14 @@ void
 TestRunnerDlg::addFailure( const CPPUNIT_NS::TestFailure &failure )
 {
   addListEntry( failure );
-  if ( failure.isError() )
-    m_errors++;
-  else
-    m_failures++;
+  if ( failure.isKnownFailure() )
+      m_knownFailures++;
+  else {
+    if ( failure.isError() )
+      m_errors++;
+    else
+      m_failures++;
+  }
 
   updateCountsDisplay();
 }
@@ -296,7 +304,12 @@ TestRunnerDlg::endTest( CPPUNIT_NS::Test *test )
 
   m_testsRun++;
   updateCountsDisplay();
-  m_testsProgress->step( m_failures == 0  &&  m_errors == 0 );
+  int status = 1;
+  if (m_knownFailures)
+      status = 0;
+  if (m_failures || m_errors)
+      status = -1;
+  m_testsProgress->step( status );
 
   m_testEndTime = timeGetTime();
 
@@ -365,6 +378,7 @@ TestRunnerDlg::reset()
   m_testsRun = 0;
   m_errors = 0;
   m_failures = 0;
+  m_knownFailures = 0;
   m_testEndTime = m_testStartTime;
 
   updateCountsDisplay();

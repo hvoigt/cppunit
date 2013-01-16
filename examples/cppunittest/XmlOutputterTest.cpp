@@ -57,6 +57,7 @@ XmlOutputterTest::testWriteXmlResultWithNoTest()
         "<FailuresTotal>0</FailuresTotal>"
         "<Errors>0</Errors>"
         "<Failures>0</Failures>"
+        "<KnownFailures>0</KnownFailures>"
       "</Statistics>"
     "</TestRun>";
   CPPUNITTEST_ASSERT_XML_EQUAL( expectedXml, actualXml );
@@ -92,6 +93,7 @@ XmlOutputterTest::testWriteXmlResultWithOneFailure()
         "<FailuresTotal>1</FailuresTotal>"
         "<Errors>0</Errors>"
         "<Failures>1</Failures>"
+        "<KnownFailures>0</KnownFailures>"
       "</Statistics>"
     "</TestRun>";
   CPPUNITTEST_ASSERT_XML_EQUAL( expectedXml, actualXml );
@@ -123,6 +125,7 @@ XmlOutputterTest::testWriteXmlResultWithOneError()
         "<FailuresTotal>1</FailuresTotal>"
         "<Errors>1</Errors>"
         "<Failures>0</Failures>"
+        "<KnownFailures>0</KnownFailures>"
       "</Statistics>"
     "</TestRun>";
   CPPUNITTEST_ASSERT_XML_EQUAL( expectedXml, actualXml );
@@ -152,6 +155,7 @@ XmlOutputterTest::testWriteXmlResultWithOneSuccess()
         "<FailuresTotal>0</FailuresTotal>"
         "<Errors>0</Errors>"
         "<Failures>0</Failures>"
+        "<KnownFailures>0</KnownFailures>"
       "</Statistics>"
     "</TestRun>";
   CPPUNITTEST_ASSERT_XML_EQUAL( expectedXml, actualXml );
@@ -216,6 +220,7 @@ XmlOutputterTest::testWriteXmlResultWithThreeFailureTwoErrorsAndTwoSuccess()
         "<FailuresTotal>5</FailuresTotal>"
         "<Errors>2</Errors>"
         "<Failures>3</Failures>"
+        "<KnownFailures>0</KnownFailures>"
       "</Statistics>"
     "</TestRun>";
   CPPUNITTEST_ASSERT_XML_EQUAL( expectedXml, actualXml );
