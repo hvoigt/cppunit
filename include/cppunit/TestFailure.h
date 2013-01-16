@@ -37,6 +37,7 @@ public:
   virtual SourceLine sourceLine() const;
 
   virtual bool isError() const;
+  virtual bool isKnownFailure() const;
 
   virtual std::string failedTestName() const;
 
@@ -46,6 +47,7 @@ protected:
   Test *m_failedTest;
   Exception *m_thrownException;
   bool m_isError;
+  bool m_knownFailure;
 
 private: 
   TestFailure( const TestFailure &other ); 

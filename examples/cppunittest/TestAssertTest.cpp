@@ -257,6 +257,70 @@ TestAssertTest::testFail()
 }
 
 
+void
+TestAssertTest::testKnownFailureAssert()
+{
+  CPPUNIT_ASSERT_KNOWN_FAILURE(false);
+}
+
+
+void
+TestAssertTest::testKnownFailureAssertMessage()
+{
+  CPPUNIT_ASSERT_MESSAGE_KNOWN_FAILURE("Message of known failure assert", false);
+}
+
+
+void
+TestAssertTest::testKnownFailure()
+{
+  CPPUNIT_FAIL_KNOWN("Message of known failure");
+}
+
+
+void
+TestAssertTest::testKnownFailureEqual()
+{
+  int expected = 0, actual = 1;
+  CPPUNIT_ASSERT_EQUAL_KNOWN_FAILURE(expected, actual);
+}
+
+
+void
+TestAssertTest::testKnownFailureEqualMessage()
+{
+  int expected = 0, actual = 1;
+  CPPUNIT_ASSERT_EQUAL_MESSAGE_KNOWN_FAILURE("Message of known equal failure",
+                                             expected, actual);
+}
+
+
+void
+TestAssertTest::testKnownFailureDoubleEqual()
+{
+  double expected = 0.0, actual = 1.0;
+  CPPUNIT_ASSERT_DOUBLES_EQUAL_KNOWN_FAILURE(expected, actual, 1e-9);
+}
+
+
+void
+TestAssertTest::testKnownFailureDoubleEqualMessage()
+{
+  double expected = 0.0, actual = 1.0;
+  CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE_KNOWN_FAILURE("Message of known double equal failure",
+                                                     expected, actual, 1e-9);
+}
+
+
+/* TODO: These macros do not yet have known failure candidates
+CPPUNIT_ASSERT_THROW( expression, ExceptionType )
+CPPUNIT_ASSERT_THROW_MESSAGE( message, expression, ExceptionType )
+
+CPPUNIT_ASSERT_NO_THROW( expression )
+CPPUNIT_ASSERT_NO_THROW_MESSAGE( message, expression )
+*/
+
+
 void 
 TestAssertTest::checkMessageContains( CPPUNIT_NS::Exception *e,
                                       std::string expected )

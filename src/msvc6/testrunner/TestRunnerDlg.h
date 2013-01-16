@@ -106,6 +106,7 @@ protected:
   int m_testsRun;
   int m_errors;
   int m_failures;
+  int m_knownFailures;
   DWORD m_testStartTime;
   DWORD m_testEndTime;
   static const CString ms_cppunitKey;

@@ -13,7 +13,7 @@ public:
 	ProgressBar();
 	virtual ~ProgressBar();
 
-  void step( bool successful );
+  void step( int successful );
 
   int scale( int value );
 
@@ -49,6 +49,7 @@ protected:
 private:
   CRect m_bounds;
   bool m_error;
+  bool m_knownError;
   int m_total;
   int m_progress;
   int m_progressX;
@@ -60,8 +61,11 @@ private:
 inline COLORREF 
 ProgressBar::getStatusColor ()
 { 
-  return m_error ? RGB (255, 0, 0) : 
-                   RGB (0, 255, 0); 
+  COLORREF color = RGB (0, 255, 0);
+  if (m_knownError)
+    color = RGB (255, 255, 0);
+  return m_error ? RGB (255, 0, 0) :
+                   color; 
 }
 
 

@@ -28,7 +28,8 @@ public:
    * \param sourceLine Source location related to the exception.
    */
   Exception( const Message &message = Message(), 
-             const SourceLine &sourceLine = SourceLine() );
+             const SourceLine &sourceLine = SourceLine(),
+             bool knownFailure = false);
 
 #ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
   /*!
@@ -62,6 +63,8 @@ public:
   /// Set the message.
   void setMessage( const Message &message );
 
+  bool isKnownFailure() const;
+
 #ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
   /// The line on which the error occurred
   long lineNumber() const;
@@ -84,6 +87,7 @@ protected:
   Message m_message;
   SourceLine m_sourceLine;
   std::string m_whatMessage;
+  bool m_knownFailure;
 };
 
 

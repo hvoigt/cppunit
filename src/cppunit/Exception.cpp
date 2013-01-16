@@ -22,13 +22,16 @@ Exception::Exception( const Exception &other )
 { 
   m_message = other.m_message; 
   m_sourceLine = other.m_sourceLine;
+  m_knownFailure = other.m_knownFailure;
 } 
 
 
 Exception::Exception( const Message &message, 
-                      const SourceLine &sourceLine )
+                      const SourceLine &sourceLine,
+                      bool knownFailure)
     : m_message( message )
     , m_sourceLine( sourceLine )
+    , m_knownFailure( knownFailure )
 {
 }
 
@@ -39,6 +42,7 @@ Exception::Exception( std::string message,
                       std::string fileName )
     : m_message( message )
     , m_sourceLine( fileName, lineNumber )
+    , m_knownFailure( false )
 {
 }
 #endif
@@ -61,6 +65,7 @@ Exception::operator =( const Exception& other )
   {
     m_message = other.m_message; 
     m_sourceLine = other.m_sourceLine;
+    m_knownFailure = other.m_knownFailure;
   }
 
   return *this; 
@@ -95,6 +100,12 @@ void
 Exception::setMessage( const Message &message )
 {
   m_message = message;
+}
+
+
+bool Exception::isKnownFailure() const
+{
+  return m_knownFailure;
 }
 
 

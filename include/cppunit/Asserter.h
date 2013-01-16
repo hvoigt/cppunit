@@ -47,13 +47,15 @@ struct Asserter
   /*! \brief Throws a Exception with the specified message and location.
    */
   static void CPPUNIT_API fail( const Message &message, 
-                                const SourceLine &sourceLine = SourceLine() );
+                                const SourceLine &sourceLine = SourceLine(),
+                                bool known = false );
 
   /*! \brief Throws a Exception with the specified message and location.
    * \deprecated Use fail( Message, SourceLine ) instead.
    */
   static void CPPUNIT_API fail( std::string message, 
-                                const SourceLine &sourceLine = SourceLine() );
+                                const SourceLine &sourceLine = SourceLine(),
+                                bool known = false );
 
   /*! \brief Throws a Exception with the specified message and location.
    * \param shouldFail if \c true then the exception is thrown. Otherwise
@@ -63,7 +65,8 @@ struct Asserter
    */
   static void CPPUNIT_API failIf( bool shouldFail, 
                                   const Message &message, 
-                                  const SourceLine &sourceLine = SourceLine() );
+                                  const SourceLine &sourceLine = SourceLine(),
+                                  bool known = false );
 
   /*! \brief Throws a Exception with the specified message and location.
    * \deprecated Use failIf( bool, Message, SourceLine ) instead.
@@ -74,7 +77,8 @@ struct Asserter
    */
   static void CPPUNIT_API failIf( bool shouldFail, 
                                   std::string message, 
-                                  const SourceLine &sourceLine = SourceLine() );
+                                  const SourceLine &sourceLine = SourceLine(),
+                                  bool known = false );
 
   /*! \brief Returns a expected value string for a message.
    * Typically used to create 'not equal' message, or to check that a message
@@ -115,7 +119,8 @@ struct Asserter
                                         std::string actual, 
                                         const SourceLine &sourceLine,
                                         const AdditionalMessage &additionalMessage = AdditionalMessage(),
-                                        std::string shortDescription = "equality assertion failed" );
+                                        std::string shortDescription = "equality assertion failed",
+                                        bool known = false );
 
   /*! \brief Throws an Exception with the specified message and location.
    * \param shouldFail if \c true then the exception is thrown. Otherwise
@@ -132,7 +137,8 @@ struct Asserter
                                           std::string actual, 
                                           const SourceLine &sourceLine,
                                           const AdditionalMessage &additionalMessage = AdditionalMessage(),
-                                          std::string shortDescription = "equality assertion failed" );
+                                          std::string shortDescription = "equality assertion failed",
+                                          bool known = false );
 
 };
 

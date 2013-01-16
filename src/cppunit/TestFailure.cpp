@@ -8,10 +8,11 @@ CPPUNIT_NS_BEGIN
 /// Constructs a TestFailure with the given test and exception.
 TestFailure::TestFailure( Test *failedTest, 
                           Exception *thrownException,
-                          bool isError ) :
+                          bool isError) :
     m_failedTest( failedTest ), 
     m_thrownException( thrownException ),
-    m_isError( isError )
+    m_isError( isError ),
+    m_knownFailure( thrownException->isKnownFailure() )
 {
 }
 
@@ -50,6 +51,13 @@ bool
 TestFailure::isError() const
 {
   return m_isError;
+}
+
+
+bool 
+TestFailure::isKnownFailure() const
+{
+  return m_knownFailure;
 }
 
 

@@ -9,7 +9,8 @@ assertDoubleEquals( double expected,
                     double actual,
                     double delta,
                     SourceLine sourceLine,
-                    const std::string &message )
+                    const std::string &message,
+                    bool known)
 {
   AdditionalMessage msg( "Delta   : " + 
                          assertion_traits<double>::toString(delta) );
@@ -39,7 +40,8 @@ assertDoubleEquals( double expected,
                             assertion_traits<double>::toString(actual),
                             sourceLine, 
                             msg, 
-                            "double equality assertion failed" );
+                            "double equality assertion failed",
+                            known);
 }
 
 

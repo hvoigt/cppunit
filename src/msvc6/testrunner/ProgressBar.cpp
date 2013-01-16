@@ -9,6 +9,7 @@ static char THIS_FILE[] = __FILE__;
 
 ProgressBar::ProgressBar()
     : m_error( false )
+    , m_knownError( false )
     , m_total( 0 )
     , m_progress( 0 ) 
     , m_progressX( 0 )
@@ -125,7 +126,7 @@ ProgressBar::start( int total )
 
 // Take one step, indicating whether it was a successful step
 void 
-ProgressBar::step( bool successful )
+ProgressBar::step( int successful )
 {
   m_progress++;
 
@@ -133,7 +134,13 @@ ProgressBar::step( bool successful )
 
   m_progressX = scale (m_progress);
 
-  if ( !m_error  &&  !successful )
+  if ( !m_knownError &&  successful == 0 )
+  {
+    m_knownError = true;
+    x = 1;
+  }
+
+  if ( !m_error  &&  successful < 0 )
   {
     m_error = true;
     x = 1;

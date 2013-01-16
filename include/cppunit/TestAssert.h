@@ -94,14 +94,17 @@ template <class T>
 void assertEquals( const T& expected,
                    const T& actual,
                    SourceLine sourceLine,
-                   const std::string &message )
+                   const std::string &message,
+                   bool known = false)
 {
   if ( !assertion_traits<T>::equal(expected,actual) ) // lazy toString conversion...
   {
     Asserter::failNotEqual( assertion_traits<T>::toString(expected),
                             assertion_traits<T>::toString(actual),
                             sourceLine,
-                            message );
+                            message,
+                            "equality assertion failed",
+                            known);
   }
 }
 
@@ -115,7 +118,8 @@ void CPPUNIT_API assertDoubleEquals( double expected,
                                      double actual,
                                      double delta,
                                      SourceLine sourceLine, 
-                                     const std::string &message );
+                                     const std::string &message,
+                                     bool known);
 
 
 /* A set of macros which allow us to get the line number
@@ -127,17 +131,21 @@ void CPPUNIT_API assertDoubleEquals( double expected,
 /** Assertions that a condition is \c true.
  * \ingroup Assertions
  */
-#define CPPUNIT_ASSERT(condition)                                                 \
+#define CPPUNIT_ASSERT_VAR(condition, known)                                      \
   ( CPPUNIT_NS::Asserter::failIf( !(condition),                                   \
                                  CPPUNIT_NS::Message( "assertion failed",         \
                                                       "Expression: " #condition), \
-                                 CPPUNIT_SOURCELINE() ) )
+                                 CPPUNIT_SOURCELINE(), known ) )
 #else
-#define CPPUNIT_ASSERT(condition)                                            \
+#define CPPUNIT_ASSERT_VAR(condition, known)                                 \
   ( CPPUNIT_NS::Asserter::failIf( !(condition),                              \
                                   CPPUNIT_NS::Message( "assertion failed" ), \
-                                  CPPUNIT_SOURCELINE() ) )
+                                  CPPUNIT_SOURCELINE(), known ) )
 #endif
+
+#define CPPUNIT_ASSERT(condition) CPPUNIT_ASSERT_VAR(condition, false)
+#define CPPUNIT_ASSERT_KNOWN_FAILURE(condition) CPPUNIT_ASSERT_VAR(condition, true)
+
 
 /** Assertion with a user specified message.
  * \ingroup Assertions
@@ -146,26 +154,36 @@ void CPPUNIT_API assertDoubleEquals( double expected,
  * \param condition If this condition evaluates to \c false then the
  *                  test failed.
  */
-#define CPPUNIT_ASSERT_MESSAGE(message,condition)                          \
+#define CPPUNIT_ASSERT_MESSAGE_VAR(message,condition,known)                \
   ( CPPUNIT_NS::Asserter::failIf( !(condition),                            \
                                   CPPUNIT_NS::Message( "assertion failed", \
                                                        "Expression: "      \
                                                        #condition,         \
                                                        message ),          \
-                                  CPPUNIT_SOURCELINE() ) )
+                                  CPPUNIT_SOURCELINE(), known ) )
+
+#define CPPUNIT_ASSERT_MESSAGE(message,condition) \
+    CPPUNIT_ASSERT_MESSAGE_VAR(message, condition, false)
+#define CPPUNIT_ASSERT_MESSAGE_KNOWN_FAILURE(message,condition) \
+    CPPUNIT_ASSERT_MESSAGE_VAR(message, condition, true)
+
 
 /** Fails with the specified message.
  * \ingroup Assertions
  * \param message Message reported in diagnostic.
  */
-#define CPPUNIT_FAIL( message )                                         \
+#define CPPUNIT_FAIL_VAR( message, known )                              \
   ( CPPUNIT_NS::Asserter::fail( CPPUNIT_NS::Message( "forced failure",  \
                                                      message ),         \
-                                CPPUNIT_SOURCELINE() ) )
+                                CPPUNIT_SOURCELINE(), known ) )
+
+#define CPPUNIT_FAIL(message) CPPUNIT_FAIL_VAR(message, false)
+#define CPPUNIT_FAIL_KNOWN(message) CPPUNIT_FAIL_VAR(message, true)
+
 
 #ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
 /// Generalized macro for primitive value comparisons
-#define CPPUNIT_ASSERT_EQUAL(expected,actual)                     \
+#define CPPUNIT_ASSERT_EQUAL_VAR(expected,actual)                     \
   ( CPPUNIT_NS::assertEquals( (expected),             \
                               (actual),               \
                               __LINE__, __FILE__ ) )
@@ -186,11 +204,17 @@ void CPPUNIT_API assertDoubleEquals( double expected,
  * The last two requirements (serialization and comparison) can be
  * removed by specializing the CppUnit::assertion_traits.
  */
-#define CPPUNIT_ASSERT_EQUAL(expected,actual)          \
+#define CPPUNIT_ASSERT_EQUAL_VAR(expected,actual,known)\
   ( CPPUNIT_NS::assertEquals( (expected),              \
                               (actual),                \
                               CPPUNIT_SOURCELINE(),    \
-                              "" ) )
+                              "", known) )
+
+#define CPPUNIT_ASSERT_EQUAL(expected, actual) \
+    CPPUNIT_ASSERT_EQUAL_VAR(expected, actual, false)
+#define CPPUNIT_ASSERT_EQUAL_KNOWN_FAILURE(expected, actual) \
+    CPPUNIT_ASSERT_EQUAL_VAR(expected, actual, true)
+
 
 /** Asserts that two values are equals, provides additional message on failure.
  * \ingroup Assertions
@@ -210,11 +234,17 @@ void CPPUNIT_API assertDoubleEquals( double expected,
  * The last two requirements (serialization and comparison) can be
  * removed by specializing the CppUnit::assertion_traits.
  */
-#define CPPUNIT_ASSERT_EQUAL_MESSAGE(message,expected,actual)      \
+#define CPPUNIT_ASSERT_EQUAL_MESSAGE_VAR(message,expected,actual,known) \
   ( CPPUNIT_NS::assertEquals( (expected),              \
                               (actual),                \
                               CPPUNIT_SOURCELINE(),    \
-                              (message) ) )
+                              (message), known ) )
+
+#define CPPUNIT_ASSERT_EQUAL_MESSAGE(message, expected, actual) \
+    CPPUNIT_ASSERT_EQUAL_MESSAGE_VAR(message, expected, actual, false)
+#define CPPUNIT_ASSERT_EQUAL_MESSAGE_KNOWN_FAILURE(message, expected, actual) \
+    CPPUNIT_ASSERT_EQUAL_MESSAGE_VAR(message, expected, actual, true)
+
 #endif
 
 /*! \brief Macro for primitive double value comparisons. 
@@ -227,12 +257,17 @@ void CPPUNIT_API assertDoubleEquals( double expected,
  * If either \c expected or \c actual is a NaN (not a number), then
  * the assertion fails.
  */
-#define CPPUNIT_ASSERT_DOUBLES_EQUAL(expected,actual,delta)        \
+#define CPPUNIT_ASSERT_DOUBLES_EQUAL_VAR(expected,actual,delta,known) \
   ( CPPUNIT_NS::assertDoubleEquals( (expected),            \
                                     (actual),              \
                                     (delta),               \
                                     CPPUNIT_SOURCELINE(),  \
-                                    "" ) )
+                                    "", known ) )
+
+#define CPPUNIT_ASSERT_DOUBLES_EQUAL(expected,actual,delta) \
+    CPPUNIT_ASSERT_DOUBLES_EQUAL_VAR(expected,actual,delta,false)
+#define CPPUNIT_ASSERT_DOUBLES_EQUAL_KNOWN_FAILURE(expected,actual,delta) \
+    CPPUNIT_ASSERT_DOUBLES_EQUAL_VAR(expected,actual,delta,true)
 
 
 /*! \brief Macro for primitive double value comparisons, setting a 
@@ -240,13 +275,17 @@ void CPPUNIT_API assertDoubleEquals( double expected,
  * \ingroup Assertions
  * \sa CPPUNIT_ASSERT_DOUBLES_EQUAL for detailed semantic of the assertion.
  */
-#define CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE(message,expected,actual,delta)  \
+#define CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE_VAR(message,expected,actual,delta,known)  \
   ( CPPUNIT_NS::assertDoubleEquals( (expected),            \
                                     (actual),              \
                                     (delta),               \
                                     CPPUNIT_SOURCELINE(),  \
-                                    (message) ) )
+                                    (message), known ) )
 
+#define CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE(message,expected,actual,delta) \
+    CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE_VAR(message,expected,actual,delta,false)
+#define CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE_KNOWN_FAILURE(message,expected,actual,delta) \
+    CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE_VAR(message,expected,actual,delta,true)
 
 /** Asserts that the given expression throws an exception of the specified type. 
  * \ingroup Assertions

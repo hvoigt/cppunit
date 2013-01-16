@@ -96,6 +96,13 @@ XmlOutputter::fillFailedTestsMap( FailedTests &failedTests )
     TestFailure *failure = *itFailure++;
     failedTests.insert( std::pair<Test* const, TestFailure*>(failure->failedTest(), failure ) );
   }
+  const TestResultCollector::TestFailures &known = m_result->knownFailures();
+  itFailure = known.begin();
+  while ( itFailure != known.end() )
+  {
+    TestFailure *failure = *itFailure++;
+    failedTests.insert( std::pair<Test* const, TestFailure*>(failure->failedTest(), failure ) );
+  }
 }
 
 
@@ -143,6 +150,7 @@ XmlOutputter::addStatistics( XmlElement *rootNode )
                                                  m_result->testFailuresTotal() ) );
   statisticsElement->addElement( new XmlElement( "Errors", m_result->testErrors() ) );
   statisticsElement->addElement( new XmlElement( "Failures", m_result->testFailures() ) );
+  statisticsElement->addElement( new XmlElement( "KnownFailures", m_result->testKnownFailures() ) );
 
   for ( Hooks::iterator it = m_hooks.begin(); it != m_hooks.end(); ++it )
     (*it)->statisticsAdded( m_xml, statisticsElement );
@@ -156,8 +164,13 @@ XmlOutputter::addFailedTest( Test *test,
                              XmlElement *testsNode )
 {
   Exception *thrownException = failure->thrownException();
-  
-  XmlElement *testElement = new XmlElement( "FailedTest" );
+
+  XmlElement *testElement;
+  if (failure->isKnownFailure())
+    testElement = new XmlElement( "KnownFailedTest" );
+  else
+    testElement = new XmlElement( "FailedTest" );
+
   testsNode->addElement( testElement );
   testElement->addAttribute( "id", testNumber );
   testElement->addElement( new XmlElement( "Name", test->getName() ) );

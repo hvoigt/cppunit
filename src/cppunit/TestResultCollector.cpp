@@ -25,6 +25,11 @@ TestResultCollector::freeFailures()
   while ( itFailure != m_failures.end() )
     delete *itFailure++;
   m_failures.clear();
+
+  itFailure = m_knownFailures.begin();
+  while ( itFailure != m_knownFailures.end() )
+    delete *itFailure++;
+  m_knownFailures.clear();
 }
 
 
@@ -54,6 +59,12 @@ TestResultCollector::addFailure( const TestFailure &failure )
   TestSuccessListener::addFailure( failure );
 
   ExclusiveZone zone( m_syncObject ); 
+
+  if (failure.isKnownFailure()) {
+    m_knownFailures.push_back( failure.clone() );
+    return;
+  }
+
   if ( failure.isError() )
     ++m_testErrors;
   m_failures.push_back( failure.clone() );
@@ -96,12 +107,30 @@ TestResultCollector::testFailuresTotal() const
 }
 
 
+/// Gets the total number of known failures.
+int
+TestResultCollector::testKnownFailures() const
+{
+  ExclusiveZone zone( m_syncObject );
+  return m_knownFailures.size();
+}
+
+
 /// Returns a the list failures (random access collection).
 const TestResultCollector::TestFailures & 
 TestResultCollector::failures() const
 { 
   ExclusiveZone zone( m_syncObject );
   return m_failures; 
+}
+
+
+/// Returns a the list failures (random access collection).
+const TestResultCollector::TestFailures & 
+TestResultCollector::knownFailures() const
+{ 
+  ExclusiveZone zone( m_syncObject );
+  return m_knownFailures; 
 }
 
 

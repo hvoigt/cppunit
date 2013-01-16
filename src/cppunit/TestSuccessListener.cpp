@@ -1,3 +1,4 @@
+#include <cppunit/TestFailure.h>
 #include <cppunit/TestSuccessListener.h>
 
 
@@ -25,8 +26,11 @@ TestSuccessListener::reset()
 
 
 void 
-TestSuccessListener::addFailure( const TestFailure & )
+TestSuccessListener::addFailure( const TestFailure &failure )
 {
+  if (failure.isKnownFailure())
+    return;
+
   ExclusiveZone zone( m_syncObject );
   m_success = false;
 }
